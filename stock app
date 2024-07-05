@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_URUN_SAYISI 100
+
+
+struct Urun {
+    int kod;
+    char ad[50];
+    int stokMiktari;
+    float fiyat;
+};
+
+struct Urun urunler[MAX_URUN_SAYISI]; 
+int urunSayisi = 0; 
+
+
+void urunEkle() {
+    if (urunSayisi < MAX_URUN_SAYISI) {
+        struct Urun yeniUrun;
+        printf("Ürün kodu: ");
+        scanf("%d", &yeniUrun.kod);
+
+        printf("Ürün adı: ");
+        scanf("%s", yeniUrun.ad);
+
+        printf("Stok miktarı: ");
+        scanf("%d", &yeniUrun.stokMiktari);
+
+        printf("Fiyatı: ");
+        scanf("%f", &yeniUrun.fiyat);
+
+        urunler[urunSayisi++] = yeniUrun;
+        printf("Ürün başarıyla eklendi.\n");
+    } else {
+        printf("Maksimum ürün sayısına ulaşıldı!\n");
+    }
+}
+
+
+void urunListele() {
+    if (urunSayisi == 0) {
+        printf("Kayıtlı ürün bulunmamaktadır.\n");
+    } else {
+        printf("Ürün Listesi:\n");
+        printf("-------------------------------------------------------------\n");
+        printf("%-10s %-20s %-15s %-10s\n", "Kod", "Ad", "Stok Miktarı", "Fiyat");
+        printf("-------------------------------------------------------------\n");
+        for (int i = 0; i < urunSayisi; i++) {
+            printf("%-10d %-20s %-15d %-10.2f\n", urunler[i].kod, urunler[i].ad, urunler[i].stokMiktari, urunler[i].fiyat);
+        }
+        printf("-------------------------------------------------------------\n");
+    }
+}
+
+// Ana program
+int main() {
+    int secim;
+    while (1) {
+        printf("\nStok Yönetimi Uygulaması\n");
+        printf("1. Ürün Ekle\n");
+        printf("2. Ürünleri Listele\n");
+        printf("3. Çıkış\n");
+        printf("Seçiminiz: ");
+        scanf("%d", &secim);
+
+        switch (secim) {
+            case 1:
+                urunEkle();
+                break;
+            case 2:
+                urunListele();
+                break;
+            case 3:
+                printf("Programdan çıkılıyor...\n");
+                exit(0);
+            default:
+                printf("Geçersiz seçim! Tekrar deneyin.\n");
+                break;
+        }
+    }
+
+    return 0;
+}
